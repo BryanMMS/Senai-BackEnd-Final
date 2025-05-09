@@ -20,14 +20,23 @@ public class Produto implements Serializable {
     @Column(name = "PRO_PRECO_VENDA", precision = 10, scale = 2)
     private Double proPrecoVenda;
 
+    @Column(name = "PRO_QUANTIDADE")
+    private int proQuantidade;
+
+    @Column(name = "PRO_DESCRICAO", length = 100)
+    private String proDescricao;
+
+
     public Produto() {
     }
 
-    public Produto(Long proId, String proNome, Double proPrecoCusto, Double proPrecoVenda) {
+    public Produto(Long proId, String proNome, Double proPrecoCusto, Double proPrecoVenda, int proQuantidade, String proDescricao) {
         this.proId = proId;
         this.proNome = proNome;
         this.proPrecoCusto = proPrecoCusto;
         this.proPrecoVenda = proPrecoVenda;
+        this.proQuantidade = proQuantidade;
+        this.proDescricao = proDescricao;
     }
 
     public Long getProId() {
@@ -60,5 +69,21 @@ public class Produto implements Serializable {
 
     public void setProPrecoVenda(Double proPrecoVenda) {
         this.proPrecoVenda = proPrecoVenda;
+    }
+
+    public int getProQuantidade() {
+        return proQuantidade;
+    }
+
+    public void setProQuantidade(int proQuantidade) {
+        this.proQuantidade = proQuantidade;
+    }
+
+    public String getProDescricao() {
+        return proDescricao;
+    }
+
+    public void setProDescricao(String proDescricao) {
+        this.proDescricao = proDescricao;
     }
 }

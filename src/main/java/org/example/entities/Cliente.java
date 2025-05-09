@@ -23,15 +23,18 @@ public class Cliente implements Serializable {
     @Column(name = "CLI_TELEFONE", length = 14)
     private String cliTelefone;
 
+    @Column(name = "CLI_ENDERECO", length = 50)
+    private String cliEndereco;
     public Cliente() {
     }
 
-    public Cliente(Long cliId, String cliNome, String cliCpf, String cliEmail, String cliTelefone) {
+    public Cliente(Long cliId, String cliNome, String cliCpf, String cliEmail, String cliTelefone, String cliEndereco) {
         this.cliId = cliId;
         this.cliNome = cliNome;
         this.cliCpf = cliCpf;
         this.cliEmail = cliEmail;
         this.cliTelefone = cliTelefone;
+        this.cliEndereco = cliEndereco;
     }
 
     public Long getCliId() {
@@ -72,5 +75,13 @@ public class Cliente implements Serializable {
 
     public void setCliTelefone(String cliTelefone) {
         this.cliTelefone = cliTelefone;
+    }
+
+    public String getCliEndereco() {
+        return cliEndereco;
+    }
+
+    public void setCliEndereco(String cliEndereco) {
+        this.cliEndereco = cliEndereco;
     }
 }
