@@ -1,6 +1,8 @@
 package org.example.entities;
 
 import javax.persistence.*;
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.Size;
 import java.io.Serializable;
 
 @Entity
@@ -11,10 +13,14 @@ public class FormaPagamento  implements Serializable {
     @Column(name = "FPG_ID")
     private Long fpgId;
 
-    @Column(name = "FPG_DESCRICAO")
+    @NotBlank(message = "Descrição é obrigatório!")
+    @Size(max = 200, message = "Descrição deve ter no máximo 200 caracteres!")
+    @Column(name = "FPG_DESCRICAO", length = 200, nullable = false)
     private String fpgDescricao;
 
-    @Column(name = "FPG_TIPO")
+    @NotBlank(message = "Tipo é obrigatório!")
+    @Size(max = 50, message = "Tipo da Forma Pagamento deve ter no máximo 50 caracteres!")
+    @Column(name = "FPG_TIPO", length = 50, nullable = false)
     private String fpgTipo;
 
 

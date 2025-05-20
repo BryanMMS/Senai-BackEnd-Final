@@ -1,6 +1,8 @@
 package org.example.entities;
 
 import javax.persistence.*;
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.Size;
 import java.io.Serializable;
 import java.time.LocalDateTime;
 
@@ -12,28 +14,40 @@ public class Produto implements Serializable {
     @Column(name = "PRO_ID")
     private Long proId;
 
-    @Column(name = "PRO_NOME")
+    @NotBlank(message = "Nome é obrigatório!")
+    @Size(max = 100, message = "Nome deve ter no máximo 100 caracteres!")
+    @Column(name = "PRO_NOME",length = 100, nullable = false)
     private String proNome;
 
-    @Column(name = "PRO_PRECO_CUSTO", precision = 10, scale = 2)
+    @NotBlank(message = "Preco de Custo é obrigatório!")
+    @Column(name = "PRO_PRECO_CUSTO", precision = 10, scale = 2, nullable = false)
     private Double proPrecoCusto;
 
-    @Column(name = "PRO_PRECO_VENDA", precision = 10, scale = 2)
+    @NotBlank(message = "Preco de Venda é obrigatório!")
+    @Column(name = "PRO_PRECO_VENDA", precision = 10, scale = 2, nullable = false)
     private Double proPrecoVenda;
 
-    @Column(name = "PRO_QUANTIDADE")
+    @NotBlank(message = "Quantidade é obrigatório!")
+    @Column(name = "PRO_QUANTIDADE", nullable = false)
     private int proQuantidade;
 
-    @Column(name = "PRO_DESCRICAO", length = 100)
+    @NotBlank(message = "Descrição é obrigatório!")
+    @Size(max = 200, message = "Descrição deve ter no máximo 200 caracteres!")
+    @Column(name = "PRO_DESCRICAO", length = 200)
     private String proDescricao;
 
-    @Column(name = "PRO_CODIGOBARRAS")
+    @NotBlank(message = "Codigo de Barras é obrigatório!")
+    @Size(max = 13, message = "Codigo de Barras deve ter no máximo 13 caracteres!")
+    @Column(name = "PRO_CODIGOBARRAS",length = 13, nullable = false, unique = true)
     private String proCodigoBarras;
 
-    @Column(name = "PRO_MARCA", length = 30)
+    @NotBlank(message = "Marca é obrigatório!")
+    @Size(max = 100, message = "Marca deve ter no máximo 100 caracteres!")
+    @Column(name = "PRO_MARCA", length = 100, nullable = false)
     private String proMarca;
 
-    @Column(name = "PRO_ATIVO")
+    @NotBlank(message = "Produto Ativo é obrigatório!")
+    @Column(name = "PRO_ATIVO", nullable = false)
     private String proAtivo;
 
     @Column(name = "PRO_DATACADASTRO")
@@ -42,7 +56,9 @@ public class Produto implements Serializable {
     @Column(name = "PRO_DATAATUALIZADO")
     private LocalDateTime proDataAtualizacao;
 
-    @Column(name = "PRO_CATEGORIA")
+    @NotBlank(message = "Categoria é obrigatório!")
+    @Size(max = 100, message = "Categoria deve ter no máximo 100 caracteres!")
+    @Column(name = "PRO_CATEGORIA", nullable = false, length = 100)
     private String proCategoria;
 
     public Produto() {
