@@ -4,6 +4,7 @@ import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Size;
 import java.io.Serializable;
+import java.math.BigDecimal;
 
 @Entity
 public class FormaPagamento  implements Serializable {
@@ -23,15 +24,29 @@ public class FormaPagamento  implements Serializable {
     @Column(name = "FPG_TIPO", length = 50, nullable = false)
     private String fpgTipo;
 
+    @NotBlank(message= "Permite Parcelamento é obrigatório")
+    @Column(name = "FPG_PERMITEPARCELAMENTO", nullable = false)
+    private Boolean fpgPermiteParcelamento;
+
+    @NotBlank(message = "Numero Maximo de Parcelas é obrigatório")
+    @Column(name = "FPG_NUMMAXPARCELAS", nullable = false)
+    private Integer fpgNumMaxParcelas;
+
+    @NotBlank(message = "Taxa adicional é obrigatório")
+    @Column(name = "FPG_TAXAADICIONAL", nullable = false)
+    private BigDecimal fpgTaxaAdicional;
 
 
     public FormaPagamento() {
     }
 
-    public FormaPagamento(Long fpgId, String fpgDescricao, String fpgTipo) {
+    public FormaPagamento(Long fpgId, String fpgDescricao, String fpgTipo, Boolean fpgPermiteParcelamento, Integer fpgNumMaxParcelas, BigDecimal fpgTaxaAdicional) {
         this.fpgId = fpgId;
         this.fpgDescricao = fpgDescricao;
         this.fpgTipo = fpgTipo;
+        this.fpgPermiteParcelamento = fpgPermiteParcelamento;
+        this.fpgNumMaxParcelas = fpgNumMaxParcelas;
+        this.fpgTaxaAdicional = fpgTaxaAdicional;
     }
 
     public Long getFpgId() {
@@ -56,5 +71,29 @@ public class FormaPagamento  implements Serializable {
 
     public void setFpgTipo(String fpgTipo) {
         this.fpgTipo = fpgTipo;
+    }
+
+    public Boolean getFpgPermiteParcelamento() {
+        return fpgPermiteParcelamento;
+    }
+
+    public void setFpgPermiteParcelamento(Boolean fpgPermiteParcelamento) {
+        this.fpgPermiteParcelamento = fpgPermiteParcelamento;
+    }
+
+    public Integer getFpgNumMaxParcelas() {
+        return fpgNumMaxParcelas;
+    }
+
+    public void setFpgNumMaxParcelas(Integer fpgNumMaxParcelas) {
+        this.fpgNumMaxParcelas = fpgNumMaxParcelas;
+    }
+
+    public BigDecimal getFpgTaxaAdicional() {
+        return fpgTaxaAdicional;
+    }
+
+    public void setFpgTaxaAdicional(BigDecimal fpgTaxaAdicional) {
+        this.fpgTaxaAdicional = fpgTaxaAdicional;
     }
 }
