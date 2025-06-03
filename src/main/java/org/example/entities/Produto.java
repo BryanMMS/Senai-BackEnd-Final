@@ -48,7 +48,7 @@ public class Produto implements Serializable {
 
     @NotBlank(message = "Produto Ativo é obrigatório!")
     @Column(name = "PRO_ATIVO", nullable = false)
-    private String proAtivo;
+    private Boolean proAtivo;
 
     @Column(name = "PRO_DATACADASTRO")
     private LocalDateTime proDataCadastro;
@@ -64,7 +64,7 @@ public class Produto implements Serializable {
     public Produto() {
     }
 
-    public Produto(Long proId, String proNome, Double proPrecoCusto, Double proPrecoVenda, int proQuantidade, String proDescricao, String proCodigoBarras, String proMarca, String proAtivo, LocalDateTime proDataCadastro, LocalDateTime proDataAtualizacao, String proCategoria) {
+    public Produto(Long proId, String proNome, Double proPrecoCusto, Double proPrecoVenda, int proQuantidade, String proDescricao, String proCodigoBarras, String proMarca, Boolean proAtivo, LocalDateTime proDataCadastro, LocalDateTime proDataAtualizacao, String proCategoria) {
         this.proId = proId;
         this.proNome = proNome;
         this.proPrecoCusto = proPrecoCusto;
@@ -143,11 +143,11 @@ public class Produto implements Serializable {
         this.proMarca = proMarca;
     }
 
-    public String getProAtivo() {
+    public Boolean getProAtivo() {
         return proAtivo;
     }
 
-    public void setProAtivo(String proAtivo) {
+    public void setProAtivo(Boolean proAtivo) {
         this.proAtivo = proAtivo;
     }
 
