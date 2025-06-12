@@ -16,12 +16,12 @@ public class ClienteDTO {
 
     private String cliNome;
     private String cliCpf;
-    private String cliEmail;
-    private String cliTelefone;
-    private String cliEndereco;
+
+
+
+
+
     private String endRua;
-
-
     private String endNumero;
     private String endCidade;
     private String endCep;
@@ -62,30 +62,6 @@ public class ClienteDTO {
 
     public void setCliCpf(String cliCpf) {
         this.cliCpf = cliCpf;
-    }
-
-    public String getCliEmail() {
-        return cliEmail;
-    }
-
-    public void setCliEmail(String cliEmail) {
-        this.cliEmail = cliEmail;
-    }
-
-    public String getCliTelefone() {
-        return cliTelefone;
-    }
-
-    public void setCliTelefone(String cliTelefone) {
-        this.cliTelefone = cliTelefone;
-    }
-
-    public String getCliEndereco() {
-        return cliEndereco;
-    }
-
-    public void setCliEndereco(String cliEndereco) {
-        this.cliEndereco = cliEndereco;
     }
 
     public String getEndRua() {

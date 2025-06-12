@@ -84,4 +84,6 @@ public class Cliente implements Serializable {
     public void setContatos(List<Contato> contatos) {
         this.contatos = contatos;
     }
+
+
 }

@@ -94,4 +94,12 @@ public class Endereco implements Serializable {
     public void setEndEstado(String endEstado) {
         this.endEstado = endEstado;
     }
+
+    public Cliente getEndCliente() {
+        return endCliente;
+    }
+
+    public void setEndCliente(Cliente endCliente) {
+        this.endCliente = endCliente;
+    }
 }
