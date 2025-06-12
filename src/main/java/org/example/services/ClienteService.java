@@ -88,19 +88,18 @@ public class ClienteService {
     }
 
     public Cliente fromDTO(ClienteDTO objDto) {
-        Cliente fornec = new Cliente(null, objDto.getCliNome(), objDto.getCliCpf());
+        Cliente cliente = new Cliente(null, objDto.getCliNome(), objDto.getCliCpf());
 
-        Endereco ender = new Endereco(null, fornec, objDto.getEndRua(), objDto.getEndNumero(),
-                objDto.getEndCidade(), objDto.getEndCep(),
-                objDto.getEndEstado());
+        Endereco endereco = new Endereco(null, cliente, objDto.getEndRua(), objDto.getEndNumero(),
+                objDto.getEndCidade(), objDto.getEndCep(), objDto.getEndEstado());
 
-        Contato contato = new Contato(null, fornec, objDto.getConCelular(), objDto.getConTelefoneComercial(),
+        Contato contato = new Contato(null, cliente, objDto.getConCelular(), objDto.getConTelefoneComercial(),
                 objDto.getConEmail());
 
-        fornec.getEnderecos().add(ender);
-        fornec.getContatos().add(contato);
+        cliente.getEnderecos().add(endereco);
+        cliente.getContatos().add(contato);
 
-        return fornec;
+        return cliente;
     }
 
     public ClienteDTO toNewDTO(Cliente obj) {
