@@ -31,8 +31,8 @@ public class Fornecedor implements Serializable {
 
     @NotBlank(message = "CNPJ é obrigatório!")
     @CNPJ(message = "CNPJ inválido!")
-    @Size(max = 14, message = "CNPJ deve ter no máximo 14 caracteres!")
-    @Column(name = "FOR_CNPJ", unique = true, length = 14 , nullable = false)
+    @Size(max = 18, message = "CNPJ deve ter no máximo 14 caracteres!")
+    @Column(name = "FOR_CNPJ", unique = true, length = 18 , nullable = false)
     private String forCnpj;
 
     @NotBlank(message = "Razão Social é obrigatório!")

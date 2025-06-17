@@ -5,6 +5,7 @@ import org.example.dto.ClienteDTO;
 import org.example.dto.FornecedorDTO;
 import org.example.entities.*;
 import org.example.repositories.ClienteRepository;
+import org.example.repositories.ContatoRepository;
 import org.example.repositories.EnderecoRepository;
 import org.example.repositories.FornecedorRepository;
 import org.example.services.exeptions.ResourceNotFoundException;
@@ -25,6 +26,9 @@ public class FornecedorService {
     @Autowired
     private EnderecoRepository enderecoRepository;
 
+    @Autowired
+    private ContatoRepository contatoRepository;
+
     public  List<Fornecedor> getAll(){
         return repository.findAll();
     }
@@ -40,6 +44,7 @@ public class FornecedorService {
             obj.setForId(null);
             obj = repository.save(obj);
             enderecoRepository.saveAll(obj.getEnderecos());
+            contatoRepository.saveAll(obj.getContatos());
             return obj;
         }catch (DataIntegrityViolationException e){
             throw  new ValueBigForAtributeException(e.getMessage());

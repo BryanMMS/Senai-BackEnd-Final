@@ -15,6 +15,9 @@ public class ClienteDTO {
     private Long cliId;
 
     private String cliNome;
+
+
+    @CPF(message = "CPF inválido")
     private String cliCpf;
 
 

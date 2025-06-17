@@ -10,6 +10,7 @@ public class FornecedorDTO {
 
     private Long forId;
     private String forNomeFantasia;
+    @CNPJ(message = "CNPJ inválido!")
     private String forCnpj;
     private String forRazaoSocial;
 

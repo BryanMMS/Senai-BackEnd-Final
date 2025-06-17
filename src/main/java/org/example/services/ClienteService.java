@@ -6,6 +6,7 @@ import org.example.entities.Contato;
 import org.example.entities.Endereco;
 import org.example.entities.FormaPagamento;
 import org.example.repositories.ClienteRepository;
+import org.example.repositories.ContatoRepository;
 import org.example.repositories.EnderecoRepository;
 import org.example.services.exeptions.ResourceNotFoundException;
 import org.example.services.exeptions.ValueBigForAtributeException;
@@ -26,6 +27,9 @@ public class ClienteService {
    @Autowired
     private EnderecoRepository enderecoRepository;
 
+   @Autowired
+   private ContatoRepository contatoRepository;
+
    public  List<Cliente> getAll(){
        return repository.findAll();
    }
@@ -41,6 +45,7 @@ public class ClienteService {
            obj.setCliId(null);
            obj = repository.save(obj);
            enderecoRepository.saveAll(obj.getEnderecos());
+           contatoRepository.saveAll(obj.getContatos());
            return obj;
        }catch (DataIntegrityViolationException e){
            throw  new ValueBigForAtributeException(e.getMessage());
