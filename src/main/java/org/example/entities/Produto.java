@@ -2,9 +2,11 @@ package org.example.entities;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import java.io.Serializable;
 import java.time.LocalDateTime;
+
 
 @Entity
 public class Produto implements Serializable {
@@ -14,26 +16,30 @@ public class Produto implements Serializable {
     @Column(name = "PRO_ID")
     private Long proId;
 
+@ManyToOne
+@JoinColumn(name = "FOR_ID", nullable = false)
+    private Fornecedor fornecedor;
+
     @NotBlank(message = "Nome é obrigatório!")
     @Size(max = 100, message = "Nome deve ter no máximo 100 caracteres!")
     @Column(name = "PRO_NOME",length = 100, nullable = false)
     private String proNome;
 
-    @NotBlank(message = "Preco de Custo é obrigatório!")
+    @NotNull(message = "Preco de Custo é obrigatório!")
     @Column(name = "PRO_PRECO_CUSTO", precision = 10, scale = 2, nullable = false)
     private Double proPrecoCusto;
 
-    @NotBlank(message = "Preco de Venda é obrigatório!")
+    @NotNull(message = "Preco de Venda é obrigatório!")
     @Column(name = "PRO_PRECO_VENDA", precision = 10, scale = 2, nullable = false)
     private Double proPrecoVenda;
 
-    @NotBlank(message = "Quantidade é obrigatório!")
+
     @Column(name = "PRO_QUANTIDADE", nullable = false)
     private int proQuantidade;
 
     @NotBlank(message = "Descrição é obrigatório!")
     @Size(max = 200, message = "Descrição deve ter no máximo 200 caracteres!")
-    @Column(name = "PRO_DESCRICAO", length = 200)
+    @Column(name = "PRO_DESCRICAO", length = 200,nullable = false)
     private String proDescricao;
 
     @NotBlank(message = "Codigo de Barras é obrigatório!")
@@ -46,7 +52,7 @@ public class Produto implements Serializable {
     @Column(name = "PRO_MARCA", length = 100, nullable = false)
     private String proMarca;
 
-    @NotBlank(message = "Produto Ativo é obrigatório!")
+    @NotNull(message = "Produto Ativo é obrigatório!")
     @Column(name = "PRO_ATIVO", nullable = false)
     private Boolean proAtivo;
 
@@ -64,8 +70,9 @@ public class Produto implements Serializable {
     public Produto() {
     }
 
-    public Produto(Long proId, String proNome, Double proPrecoCusto, Double proPrecoVenda, int proQuantidade, String proDescricao, String proCodigoBarras, String proMarca, Boolean proAtivo, LocalDateTime proDataCadastro, LocalDateTime proDataAtualizacao, String proCategoria) {
+    public Produto(Long proId,Fornecedor fornecedor, String proNome, Double proPrecoCusto, Double proPrecoVenda, int proQuantidade, String proDescricao, String proCodigoBarras, String proMarca, Boolean proAtivo, LocalDateTime proDataCadastro, LocalDateTime proDataAtualizacao, String proCategoria) {
         this.proId = proId;
+        this.fornecedor = fornecedor;
         this.proNome = proNome;
         this.proPrecoCusto = proPrecoCusto;
         this.proPrecoVenda = proPrecoVenda;

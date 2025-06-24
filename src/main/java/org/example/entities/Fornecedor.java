@@ -18,6 +18,9 @@ public class Fornecedor implements Serializable {
     @Column(name = "FOR_ID")
     private Long forId;
 
+    @OneToMany(mappedBy = "fornecedor")
+    private List<Produto> produtos;
+
     @OneToMany(mappedBy = "endFornecedor", cascade = CascadeType.ALL)
     private List<Endereco> enderecos = new ArrayList<>();
 
@@ -31,7 +34,7 @@ public class Fornecedor implements Serializable {
 
     @NotBlank(message = "CNPJ é obrigatório!")
     @CNPJ(message = "CNPJ inválido!")
-    @Size(max = 18, message = "CNPJ deve ter no máximo 14 caracteres!")
+    @Size(max = 18, message = "CNPJ deve ter no máximo 18 caracteres!")
     @Column(name = "FOR_CNPJ", unique = true, length = 18 , nullable = false)
     private String forCnpj;
 
