@@ -181,4 +181,12 @@ public class Produto implements Serializable {
     public void setProCategoria(String proCategoria) {
         this.proCategoria = proCategoria;
     }
+
+    public Fornecedor getFornecedor() {
+        return fornecedor;
+    }
+
+    public void setFornecedor(Fornecedor fornecedor) {
+        this.fornecedor = fornecedor;
+    }
 }

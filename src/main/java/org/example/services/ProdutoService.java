@@ -45,6 +45,7 @@ public class ProdutoService {
             produtoSistema.setProDataAtualizacao(produto.getProDataAtualizacao());
             produtoSistema.setProDataCadastro(produto.getProDataCadastro());
             produtoSistema.setProCategoria(produto.getProCategoria());
+            produtoSistema.setFornecedor(produto.getFornecedor());
             repository.save(produtoSistema);
             return true;
         }
