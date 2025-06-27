@@ -2,6 +2,7 @@ package org.example.entities;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import java.io.Serializable;
 import java.math.BigDecimal;
@@ -28,11 +29,11 @@ public class FormaPagamento  implements Serializable {
     @Column(name = "FPG_PERMITEPARCELAMENTO", nullable = false)
     private Boolean fpgPermiteParcelamento;
 
-    @NotBlank(message = "Numero Maximo de Parcelas é obrigatório")
+    @NotNull(message = "Numero Maximo de Parcelas é obrigatório")
     @Column(name = "FPG_NUMMAXPARCELAS", nullable = false)
     private Integer fpgNumMaxParcelas;
 
-    @NotBlank(message = "Taxa adicional é obrigatório")
+    @NotNull(message = "Taxa adicional é obrigatório")
     @Column(name = "FPG_TAXAADICIONAL", nullable = false)
     private BigDecimal fpgTaxaAdicional;
 
