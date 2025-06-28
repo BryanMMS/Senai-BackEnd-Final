@@ -16,8 +16,8 @@ public class Produto implements Serializable {
     @Column(name = "PRO_ID")
     private Long proId;
 
-@ManyToOne
-@JoinColumn(name = "FOR_ID", nullable = false)
+    @ManyToOne(optional = false)
+    @JoinColumn(name = "FOR_ID", nullable = false)
     private Fornecedor fornecedor;
 
     @NotBlank(message = "Nome é obrigatório!")
@@ -37,9 +37,9 @@ public class Produto implements Serializable {
     @Column(name = "PRO_QUANTIDADE", nullable = false)
     private int proQuantidade;
 
-    @NotBlank(message = "Descrição é obrigatório!")
+
     @Size(max = 200, message = "Descrição deve ter no máximo 200 caracteres!")
-    @Column(name = "PRO_DESCRICAO", length = 200,nullable = false)
+    @Column(name = "PRO_DESCRICAO", length = 200)
     private String proDescricao;
 
     @NotBlank(message = "Codigo de Barras é obrigatório!")
