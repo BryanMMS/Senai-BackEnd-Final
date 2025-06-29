@@ -7,6 +7,7 @@ import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import java.io.Serializable;
 import java.time.LocalDateTime;
+import java.util.List;
 
 @Entity
 public class Marca implements Serializable {
@@ -16,7 +17,8 @@ public class Marca implements Serializable {
     @Column(name = "MAR_ID")
     private long marId;
 
-
+    @OneToMany(mappedBy = "marca")
+    private List<Produto> produtos;
     @NotBlank(message = "Nome é obrigatório!")
     @Size(max =  50, message = "Nome deve ter no máximo 50 caracteres!")
     @Column(name = "MAR_NOME", nullable = false)

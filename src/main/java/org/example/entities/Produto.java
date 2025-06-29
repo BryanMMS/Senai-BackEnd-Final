@@ -20,9 +20,14 @@ public class Produto implements Serializable {
     @JoinColumn(name = "FOR_ID", nullable = false)
     private Fornecedor fornecedor;
 
+    @ManyToOne(optional = false)
+    @JoinColumn(name = "MAR_ID", nullable = false)
+    private Marca marca;
+
+
     @NotBlank(message = "Nome é obrigatório!")
     @Size(max = 100, message = "Nome deve ter no máximo 100 caracteres!")
-    @Column(name = "PRO_NOME",length = 100, nullable = false)
+    @Column(name = "PRO_NOME", length = 100, nullable = false)
     private String proNome;
 
     @NotNull(message = "Preco de Custo é obrigatório!")
@@ -44,13 +49,9 @@ public class Produto implements Serializable {
 
     @NotBlank(message = "Codigo de Barras é obrigatório!")
     @Size(max = 13, message = "Codigo de Barras deve ter no máximo 13 caracteres!")
-    @Column(name = "PRO_CODIGOBARRAS",length = 13, nullable = false, unique = true)
+    @Column(name = "PRO_CODIGOBARRAS", length = 13, nullable = false, unique = true)
     private String proCodigoBarras;
 
-    @NotBlank(message = "Marca é obrigatório!")
-    @Size(max = 100, message = "Marca deve ter no máximo 100 caracteres!")
-    @Column(name = "PRO_MARCA", length = 100, nullable = false)
-    private String proMarca;
 
     @NotNull(message = "Produto Ativo é obrigatório!")
     @Column(name = "PRO_ATIVO", nullable = false)
@@ -70,16 +71,16 @@ public class Produto implements Serializable {
     public Produto() {
     }
 
-    public Produto(Long proId,Fornecedor fornecedor, String proNome, Double proPrecoCusto, Double proPrecoVenda, int proQuantidade, String proDescricao, String proCodigoBarras, String proMarca, Boolean proAtivo, LocalDateTime proDataCadastro, LocalDateTime proDataAtualizacao, String proCategoria) {
+    public Produto(Long proId, Fornecedor fornecedor, Marca marca, String proNome, Double proPrecoCusto, Double proPrecoVenda, int proQuantidade, String proDescricao, String proCodigoBarras, Boolean proAtivo, LocalDateTime proDataCadastro, LocalDateTime proDataAtualizacao, String proCategoria) {
         this.proId = proId;
         this.fornecedor = fornecedor;
+        this.marca = marca;
         this.proNome = proNome;
         this.proPrecoCusto = proPrecoCusto;
         this.proPrecoVenda = proPrecoVenda;
         this.proQuantidade = proQuantidade;
         this.proDescricao = proDescricao;
         this.proCodigoBarras = proCodigoBarras;
-        this.proMarca = proMarca;
         this.proAtivo = proAtivo;
         this.proDataCadastro = proDataCadastro;
         this.proDataAtualizacao = proDataAtualizacao;
@@ -92,6 +93,22 @@ public class Produto implements Serializable {
 
     public void setProId(Long proId) {
         this.proId = proId;
+    }
+
+    public Fornecedor getFornecedor() {
+        return fornecedor;
+    }
+
+    public void setFornecedor(Fornecedor fornecedor) {
+        this.fornecedor = fornecedor;
+    }
+
+    public Marca getMarca() {
+        return marca;
+    }
+
+    public void setMarca(Marca marca) {
+        this.marca = marca;
     }
 
     public String getProNome() {
@@ -142,14 +159,6 @@ public class Produto implements Serializable {
         this.proCodigoBarras = proCodigoBarras;
     }
 
-    public String getProMarca() {
-        return proMarca;
-    }
-
-    public void setProMarca(String proMarca) {
-        this.proMarca = proMarca;
-    }
-
     public Boolean getProAtivo() {
         return proAtivo;
     }
@@ -180,13 +189,5 @@ public class Produto implements Serializable {
 
     public void setProCategoria(String proCategoria) {
         this.proCategoria = proCategoria;
-    }
-
-    public Fornecedor getFornecedor() {
-        return fornecedor;
-    }
-
-    public void setFornecedor(Fornecedor fornecedor) {
-        this.fornecedor = fornecedor;
     }
 }

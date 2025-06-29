@@ -3,10 +3,12 @@ package org.example.resources;
 
 import org.apache.coyote.Response;
 import org.example.entities.Categoria;
+import org.example.entities.FormaPagamento;
 import org.example.entities.Marca;
 import org.example.repositories.CategoriaRepository;
 import org.example.services.CategoriaService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -41,6 +43,12 @@ public class CategoriaResource {
         } else {
             return ResponseEntity.notFound().build();
         }
+    }
+
+    @PostMapping
+    public ResponseEntity<Categoria> insert(@RequestBody Categoria categoria) {
+        Categoria createdCategoria = categoriaService.insert(categoria);
+        return ResponseEntity.status(HttpStatus.CREATED).body(createdCategoria);
     }
 
     @DeleteMapping("{id}")

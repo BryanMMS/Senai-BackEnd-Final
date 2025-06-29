@@ -41,11 +41,11 @@ public class ProdutoService {
             produtoSistema.setProDescricao(produto.getProDescricao());
             produtoSistema.setProCodigoBarras(produto.getProCodigoBarras());
             produtoSistema.setProAtivo(produto.getProAtivo());
-            produtoSistema.setProMarca(produto.getProMarca());
             produtoSistema.setProDataAtualizacao(produto.getProDataAtualizacao());
             produtoSistema.setProDataCadastro(produto.getProDataCadastro());
             produtoSistema.setProCategoria(produto.getProCategoria());
             produtoSistema.setFornecedor(produto.getFornecedor());
+            produtoSistema.setMarca(produto.getMarca());
             repository.save(produtoSistema);
             return true;
         }
