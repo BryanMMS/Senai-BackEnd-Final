@@ -23,6 +23,12 @@ public class Contato implements Serializable {
     @JoinColumn(name = "CON_FOR_ID")
     private Fornecedor conFornecedor;
 
+
+    @JsonIgnore
+    @ManyToOne
+    @JoinColumn(name = "CON_FUN_ID")
+    private Funcionario conFuncionario;
+
     @Column(name = "CON_CELULAR", length = 20)
     private String conCelular;
 
@@ -52,6 +58,19 @@ public class Contato implements Serializable {
         this.conTelefoneComercial = telefoneComercial;
         this.conEmail = email;
     }
+
+
+    //Construtor para Funcionario
+
+
+    public Contato(Long conId, Funcionario funcionario, String conCelular, String conTelefoneComercial, String conEmail) {
+        this.conId = conId;
+        this.conFuncionario = funcionario;
+        this.conCelular = conCelular;
+        this.conTelefoneComercial = conTelefoneComercial;
+        this.conEmail = conEmail;
+    }
+
     public Long getConId() {
         return conId;
     }
@@ -98,5 +117,13 @@ public class Contato implements Serializable {
 
     public void setConFornecedor(Fornecedor conFornecedor) {
         this.conFornecedor = conFornecedor;
+    }
+
+    public Funcionario getConFuncionario() {
+        return conFuncionario;
+    }
+
+    public void setConFuncionario(Funcionario conFuncionario) {
+        this.conFuncionario = conFuncionario;
     }
 }
