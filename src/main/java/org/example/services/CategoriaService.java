@@ -35,7 +35,6 @@ public class CategoriaService {
             Categoria categoriaSistema = optionalCategoria.get();
             categoriaSistema.setCtgNome(categoria.getCtgNome());
             categoriaSistema.setCtgDescricao(categoria.getCtgDescricao());
-            categoriaSistema.setCtgDataCadastro(categoria.getCtgDataCadastro());
             categoriaSistema.setCtgDataAtualizado(categoria.getCtgDataAtualizado());
             categoriaSistema.setCtgAtivo(categoria.getCtgAtivo());
             repository.save(categoriaSistema);

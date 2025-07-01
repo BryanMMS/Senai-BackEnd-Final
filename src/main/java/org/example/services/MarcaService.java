@@ -34,7 +34,6 @@ public class MarcaService {
             Marca marcaSistema = optionalMarca.get();
             marcaSistema.setMarNome(marca.getMarNome());
             marcaSistema.setMarDescricao(marca.getMarDescricao());
-            marcaSistema.setMarDataCadastro(marca.getMarDataCadastro());
             marcaSistema.setMarDataAtualizado(marca.getMarDataAtualizado());
             marcaSistema.setMarAtivo(marca.getMarAtivo());
             repository.save(marcaSistema);

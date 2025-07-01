@@ -42,10 +42,9 @@ public class ProdutoService {
             produtoSistema.setProCodigoBarras(produto.getProCodigoBarras());
             produtoSistema.setProAtivo(produto.getProAtivo());
             produtoSistema.setProDataAtualizacao(produto.getProDataAtualizacao());
-            produtoSistema.setProDataCadastro(produto.getProDataCadastro());
-            produtoSistema.setProCategoria(produto.getProCategoria());
             produtoSistema.setFornecedor(produto.getFornecedor());
             produtoSistema.setMarca(produto.getMarca());
+            produtoSistema.setCategoria(produto.getCategoria());
             repository.save(produtoSistema);
             return true;
         }

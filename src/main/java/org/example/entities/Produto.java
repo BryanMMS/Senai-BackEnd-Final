@@ -25,6 +25,11 @@ public class Produto implements Serializable {
     private Marca marca;
 
 
+    @ManyToOne(optional = false)
+    @JoinColumn(name = "CTG_ID", nullable = false)
+    private Categoria categoria;
+
+
     @NotBlank(message = "Nome é obrigatório!")
     @Size(max = 100, message = "Nome deve ter no máximo 100 caracteres!")
     @Column(name = "PRO_NOME", length = 100, nullable = false)
@@ -63,18 +68,15 @@ public class Produto implements Serializable {
     @Column(name = "PRO_DATAATUALIZADO")
     private LocalDateTime proDataAtualizacao;
 
-    @NotBlank(message = "Categoria é obrigatório!")
-    @Size(max = 100, message = "Categoria deve ter no máximo 100 caracteres!")
-    @Column(name = "PRO_CATEGORIA", nullable = false, length = 100)
-    private String proCategoria;
 
     public Produto() {
     }
 
-    public Produto(Long proId, Fornecedor fornecedor, Marca marca, String proNome, Double proPrecoCusto, Double proPrecoVenda, int proQuantidade, String proDescricao, String proCodigoBarras, Boolean proAtivo, LocalDateTime proDataCadastro, LocalDateTime proDataAtualizacao, String proCategoria) {
+    public Produto(Long proId, Fornecedor fornecedor, Marca marca,Categoria categoria ,String proNome, Double proPrecoCusto, Double proPrecoVenda, int proQuantidade, String proDescricao, String proCodigoBarras, Boolean proAtivo, LocalDateTime proDataCadastro, LocalDateTime proDataAtualizacao, String proCategoria) {
         this.proId = proId;
         this.fornecedor = fornecedor;
         this.marca = marca;
+        this.categoria = categoria;
         this.proNome = proNome;
         this.proPrecoCusto = proPrecoCusto;
         this.proPrecoVenda = proPrecoVenda;
@@ -84,7 +86,7 @@ public class Produto implements Serializable {
         this.proAtivo = proAtivo;
         this.proDataCadastro = proDataCadastro;
         this.proDataAtualizacao = proDataAtualizacao;
-        this.proCategoria = proCategoria;
+
     }
 
     public Long getProId() {
@@ -109,6 +111,14 @@ public class Produto implements Serializable {
 
     public void setMarca(Marca marca) {
         this.marca = marca;
+    }
+
+    public Categoria getCategoria() {
+        return categoria;
+    }
+
+    public void setCategoria(Categoria categoria) {
+        this.categoria = categoria;
     }
 
     public String getProNome() {
@@ -183,11 +193,4 @@ public class Produto implements Serializable {
         this.proDataAtualizacao = proDataAtualizacao;
     }
 
-    public String getProCategoria() {
-        return proCategoria;
-    }
-
-    public void setProCategoria(String proCategoria) {
-        this.proCategoria = proCategoria;
-    }
 }
