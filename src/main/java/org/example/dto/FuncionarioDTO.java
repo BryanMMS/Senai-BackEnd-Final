@@ -1,5 +1,6 @@
 package org.example.dto;
 
+import org.example.entities.CargoFunc;
 import org.hibernate.validator.constraints.br.CPF;
 
 import java.time.LocalDateTime;
@@ -11,6 +12,8 @@ public class FuncionarioDTO {
     @CPF(message = "CPF inválido")
     private String funCpf;
     private LocalDateTime funDataAdmissao;
+
+    private Long carId;
 
 
     private String endRua;
@@ -122,5 +125,13 @@ public class FuncionarioDTO {
 
     public void setConEmail(String conEmail) {
         this.conEmail = conEmail;
+    }
+
+    public Long getCarId() {
+        return carId;
+    }
+
+    public void setCarId(Long carId) {
+        this.carId = carId;
     }
 }

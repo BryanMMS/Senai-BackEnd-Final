@@ -18,6 +18,10 @@ public class Funcionario implements Serializable {
     @Column(name = "FUN_ID")
     private Long funId;
 
+    @ManyToOne(optional = false)
+    @JoinColumn(name = "CAR_ID", nullable = false)
+    private CargoFunc cargoFunc;
+
     @OneToMany(mappedBy = "endFuncionario", cascade = CascadeType.ALL)
     private List<Endereco> enderecos = new ArrayList<>();
 
@@ -40,11 +44,12 @@ public class Funcionario implements Serializable {
     public Funcionario() {
     }
 
-    public Funcionario(Long funId, String funNome, String funCpf, LocalDateTime funDataAdmissao) {
+    public Funcionario(Long funId,CargoFunc cargoFunc ,String funNome, String funCpf, LocalDateTime funDataAdmissao) {
         this.funId = funId;
         this.funNome = funNome;
         this.funCpf = funCpf;
         this.funDataAdmissao = funDataAdmissao;
+        this.cargoFunc = cargoFunc;
     }
 
     public Long getFunId() {
@@ -93,5 +98,13 @@ public class Funcionario implements Serializable {
 
     public void setContatos(List<Contato> contatos) {
         this.contatos = contatos;
+    }
+
+    public CargoFunc getCargoFunc() {
+        return cargoFunc;
+    }
+
+    public void setCargoFunc(CargoFunc cargoFunc) {
+        this.cargoFunc = cargoFunc;
     }
 }
