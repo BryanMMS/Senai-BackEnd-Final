@@ -3,6 +3,7 @@ package org.example.dto;
 import org.example.entities.CargoFunc;
 import org.hibernate.validator.constraints.br.CPF;
 
+import javax.validation.constraints.Email;
 import java.time.LocalDateTime;
 
 public class FuncionarioDTO {
@@ -25,6 +26,8 @@ public class FuncionarioDTO {
 
     private String conCelular;
     private String conTelefoneComercial;
+
+    @Email(message = "E-mail inválido")
     private String conEmail;
 
 

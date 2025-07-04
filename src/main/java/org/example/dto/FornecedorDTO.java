@@ -5,6 +5,7 @@ import org.example.entities.Cliente;
 import org.hibernate.validator.constraints.br.CNPJ;
 
 import javax.persistence.*;
+import javax.validation.constraints.Email;
 
 public class FornecedorDTO {
 
@@ -24,6 +25,8 @@ public class FornecedorDTO {
 
     private String conCelular;
     private String conTelefoneComercial;
+
+    @Email(message = "E-mail inválido")
     private String conEmail;
 
 public FornecedorDTO(){

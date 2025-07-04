@@ -3,6 +3,7 @@ package org.example.entities;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import javax.persistence.*;
+import javax.validation.constraints.Email;
 import java.io.Serializable;
 
 @Entity
@@ -35,6 +36,7 @@ public class Contato implements Serializable {
     @Column(name = "CON_TELEFONE_COMERCIAL", length = 20)
     private String conTelefoneComercial;
 
+    @Email(message = "E-mail inválido")
     @Column(length = 55, name = "CON_EMAIL")
     private String conEmail;
 
