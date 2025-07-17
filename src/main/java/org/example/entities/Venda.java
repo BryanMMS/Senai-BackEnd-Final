@@ -1,5 +1,8 @@
     package org.example.entities;
     import java.util.List;
+
+    import com.fasterxml.jackson.annotation.JsonBackReference;
+    import com.fasterxml.jackson.annotation.JsonManagedReference;
     import org.aspectj.apache.bcel.classfile.NestMembers;
 
     import javax.persistence.*;
@@ -16,7 +19,9 @@
         @Column(name = "VND_ID")
         private Long vndId;
 
+
         @OneToMany(mappedBy = "venda", cascade = CascadeType.ALL, orphanRemoval = true)
+        @JsonManagedReference
         private List<ItemVenda> itens = new ArrayList<>();
 
         @ManyToOne(optional = false)

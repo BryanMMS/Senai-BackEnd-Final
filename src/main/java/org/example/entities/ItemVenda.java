@@ -1,5 +1,7 @@
 package org.example.entities;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+
 import javax.persistence.*;
 
 @Entity
@@ -16,6 +18,7 @@ public class ItemVenda {
 
     @ManyToOne(optional = false)
     @JoinColumn(name = "VND_ID", nullable = false)
+    @JsonBackReference
     private Venda venda;
 
     @Column(name = "IVD_QUANTIDADE", nullable = false)

@@ -9,6 +9,7 @@ import org.example.services.exeptions.ResourceNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import javax.transaction.Transactional;
 import java.util.List;
 import java.util.Optional;
 
@@ -32,7 +33,7 @@ public class VendaService {
         return obj.orElseThrow(() -> new ResourceNotFoundException(id));
     }
 
-
+    @Transactional
     public Venda insert(Venda venda) {
         for (ItemVenda item : venda.getItens()) {
             item.setVenda(venda);
@@ -71,7 +72,7 @@ public class VendaService {
 
 
 
-
+    @Transactional
     public boolean update(Long id, Venda venda) {
         Optional<Venda> optionalVenda = repository.findById(id);
         if (optionalVenda.isPresent()) {
