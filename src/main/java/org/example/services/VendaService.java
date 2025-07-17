@@ -3,6 +3,9 @@ package org.example.services;
 import org.example.entities.ItemVenda;
 import org.example.entities.Produto;
 import org.example.entities.Venda;
+import org.example.repositories.ClienteRepository;
+import org.example.repositories.FuncionarioRepository;
+import org.example.repositories.FormaPagamentoRepository;
 import org.example.repositories.ProdutoRepository;
 import org.example.repositories.VendaRepository;
 import org.example.services.exeptions.ResourceNotFoundException;
@@ -22,6 +25,15 @@ public class VendaService {
     @Autowired
     private VendaRepository repository;
 
+    @Autowired
+    private ClienteRepository clienteRepository;
+
+    @Autowired
+    private FuncionarioRepository funcionarioRepository;
+
+    @Autowired
+    private FormaPagamentoRepository formaPagamentoRepository;
+
     // Buscar todas as vendas
     public List<Venda> getAll() {
         return repository.findAll();
@@ -35,6 +47,7 @@ public class VendaService {
 
     @Transactional
     public Venda insert(Venda venda) {
+        // mesma lógica de insert que já tem...
         for (ItemVenda item : venda.getItens()) {
             item.setVenda(venda);
 
@@ -42,7 +55,6 @@ public class VendaService {
             Produto produto = produtoRepository.findById(proId)
                     .orElseThrow(() -> new ResourceNotFoundException("Produto não encontrado: " + proId));
 
-            // Atualiza o estoque do produto
             int estoqueAtual = produto.getProQuantidade();
             int novaQuantidade = estoqueAtual - item.getIvdQuantidade();
 
@@ -70,73 +82,78 @@ public class VendaService {
         return repository.save(venda);
     }
 
-
-
     @Transactional
     public boolean update(Long id, Venda venda) {
         Optional<Venda> optionalVenda = repository.findById(id);
-        if (optionalVenda.isPresent()) {
-            Venda vendaSistema = optionalVenda.get();
-
-            // 1. Devolver ao estoque as quantidades dos itens antigos
-            for (ItemVenda itemAntigo : vendaSistema.getItens()) {
-                Produto produtoAntigo = produtoRepository.findById(itemAntigo.getProduto().getProId())
-                        .orElseThrow(() -> new ResourceNotFoundException("Produto não encontrado: " + itemAntigo.getProduto().getProId()));
-
-                int novoEstoque = produtoAntigo.getProQuantidade() + itemAntigo.getIvdQuantidade();
-                produtoAntigo.setProQuantidade(novoEstoque);
-                produtoRepository.save(produtoAntigo);
-            }
-
-            // Atualizar os campos básicos da venda
-            vendaSistema.setCliente(venda.getCliente());
-            vendaSistema.setFuncionario(venda.getFuncionario());
-            vendaSistema.setFormaPagamento(venda.getFormaPagamento());
-            vendaSistema.setVndDataVenda(venda.getVndDataVenda());
-            vendaSistema.setVndConcluida(venda.getVndConcluida());
-            vendaSistema.setVndObservacao(venda.getVndObservacao());
-
-            List<ItemVenda> itensAtualizados = venda.getItens();
-
-            // 2. Atualizar os itens da venda e descontar estoque dos produtos novos
-            for (ItemVenda item : itensAtualizados) {
-                item.setVenda(vendaSistema);
-
-                Long proId = item.getProduto().getProId();
-                Produto produto = produtoRepository.findById(proId)
-                        .orElseThrow(() -> new ResourceNotFoundException("Produto não encontrado: " + proId));
-
-                int novoEstoque = produto.getProQuantidade() - item.getIvdQuantidade();
-                if (novoEstoque < 0) {
-                    throw new RuntimeException("Estoque insuficiente para o produto: " + produto.getProId());
-                }
-                produto.setProQuantidade(novoEstoque);
-                produtoRepository.save(produto);
-
-                item.setProduto(produto);
-
-                double precoUnitario = produto.getProPrecoVenda();
-                item.setIvdPrecoUnitario(precoUnitario);
-
-                double subtotal = precoUnitario * item.getIvdQuantidade();
-                item.setIvdSubtotal(subtotal);
-            }
-
-            vendaSistema.setItens(itensAtualizados);
-
-            // Recalcula o total da venda somando os subtotais
-            double total = itensAtualizados.stream()
-                    .mapToDouble(ItemVenda::getIvdSubtotal)
-                    .sum();
-            vendaSistema.setVndTotal(total);
-
-            repository.save(vendaSistema);
-            return true;
+        if (!optionalVenda.isPresent()) {
+            return false;
         }
-        return false;
+        Venda vendaSistema = optionalVenda.get();
+
+        // 1. Devolver ao estoque as quantidades dos itens antigos
+        for (ItemVenda itemAntigo : vendaSistema.getItens()) {
+            Produto produtoAntigo = produtoRepository.findById(itemAntigo.getProduto().getProId())
+                    .orElseThrow(() -> new ResourceNotFoundException("Produto não encontrado: " + itemAntigo.getProduto().getProId()));
+
+            int novoEstoque = produtoAntigo.getProQuantidade() + itemAntigo.getIvdQuantidade();
+            produtoAntigo.setProQuantidade(novoEstoque);
+            produtoRepository.save(produtoAntigo);
+        }
+
+        // Carregar entidades relacionadas do banco para garantir que são gerenciadas
+        var cliente = clienteRepository.findById(venda.getCliente().getCliId())
+                .orElseThrow(() -> new ResourceNotFoundException("Cliente não encontrado"));
+        var funcionario = funcionarioRepository.findById(venda.getFuncionario().getFunId())
+                .orElseThrow(() -> new ResourceNotFoundException("Funcionario não encontrado"));
+        var formaPagamento = formaPagamentoRepository.findById(venda.getFormaPagamento().getFpgId())
+                .orElseThrow(() -> new ResourceNotFoundException("FormaPagamento não encontrado"));
+
+        // Atualizar os campos básicos da venda
+        vendaSistema.setCliente(cliente);
+        vendaSistema.setFuncionario(funcionario);
+        vendaSistema.setFormaPagamento(formaPagamento);
+        vendaSistema.setVndDataVenda(venda.getVndDataVenda());
+        vendaSistema.setVndConcluida(venda.getVndConcluida());
+        vendaSistema.setVndObservacao(venda.getVndObservacao());
+
+        // Limpar itens antigos para evitar problemas com orphanRemoval
+        vendaSistema.getItens().clear();
+
+        // 2. Atualizar os itens da venda e descontar estoque dos produtos novos
+        for (ItemVenda item : venda.getItens()) {
+            item.setVenda(vendaSistema);
+
+            Long proId = item.getProduto().getProId();
+            Produto produto = produtoRepository.findById(proId)
+                    .orElseThrow(() -> new ResourceNotFoundException("Produto não encontrado: " + proId));
+
+            int novoEstoque = produto.getProQuantidade() - item.getIvdQuantidade();
+            if (novoEstoque < 0) {
+                throw new RuntimeException("Estoque insuficiente para o produto: " + produto.getProId());
+            }
+            produto.setProQuantidade(novoEstoque);
+            produtoRepository.save(produto);
+
+            item.setProduto(produto);
+
+            double precoUnitario = produto.getProPrecoVenda();
+            item.setIvdPrecoUnitario(precoUnitario);
+
+            double subtotal = precoUnitario * item.getIvdQuantidade();
+            item.setIvdSubtotal(subtotal);
+
+            vendaSistema.getItens().add(item);
+        }
+
+        // Recalcula o total da venda somando os subtotais
+        double total = vendaSistema.getItens().stream()
+                .mapToDouble(ItemVenda::getIvdSubtotal)
+                .sum();
+        vendaSistema.setVndTotal(total);
+
+        repository.save(vendaSistema);
+        return true;
     }
-
-
 
     // Deletar venda por id
     public void delete(Long id) {
