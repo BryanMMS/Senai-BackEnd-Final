@@ -156,7 +156,22 @@ public class VendaService {
     }
 
     // Deletar venda por id
+    @Transactional
     public void delete(Long id) {
+        Venda venda = repository.findById(id)
+                .orElseThrow(() -> new ResourceNotFoundException("Venda não encontrada com ID: " + id));
+
+        // 1. Devolver o estoque dos produtos
+        for (ItemVenda item : venda.getItens()) {
+            Produto produto = produtoRepository.findById(item.getProduto().getProId())
+                    .orElseThrow(() -> new ResourceNotFoundException("Produto não encontrado: " + item.getProduto().getProId()));
+
+            int novoEstoque = produto.getProQuantidade() + item.getIvdQuantidade();
+            produto.setProQuantidade(novoEstoque);
+            produtoRepository.save(produto);
+        }
+
+        // 2. Excluir a venda
         repository.deleteById(id);
     }
 }
