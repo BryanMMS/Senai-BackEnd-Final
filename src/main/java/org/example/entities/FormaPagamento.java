@@ -15,6 +15,11 @@ public class FormaPagamento  implements Serializable {
     @Column(name = "FPG_ID")
     private Long fpgId;
 
+    @NotBlank(message = "Nome é obrigatório!")
+    @Size(max = 200, message = "Nome deve ter no máximo 100 caracteres!")
+    @Column(name = "FPG_NOME", length = 100, nullable = false)
+    private String fpgNome;
+
     @NotBlank(message = "Descrição é obrigatório!")
     @Size(max = 200, message = "Descrição deve ter no máximo 200 caracteres!")
     @Column(name = "FPG_DESCRICAO", length = 200, nullable = false)
@@ -41,8 +46,9 @@ public class FormaPagamento  implements Serializable {
     public FormaPagamento() {
     }
 
-    public FormaPagamento(Long fpgId, String fpgDescricao, String fpgTipo, Boolean fpgPermiteParcelamento, Integer fpgNumMaxParcelas, BigDecimal fpgTaxaAdicional) {
+    public FormaPagamento(Long fpgId, String fpgNome, String fpgDescricao, String fpgTipo, Boolean fpgPermiteParcelamento, Integer fpgNumMaxParcelas, BigDecimal fpgTaxaAdicional) {
         this.fpgId = fpgId;
+        this.fpgNome = fpgNome;
         this.fpgDescricao = fpgDescricao;
         this.fpgTipo = fpgTipo;
         this.fpgPermiteParcelamento = fpgPermiteParcelamento;
@@ -56,6 +62,14 @@ public class FormaPagamento  implements Serializable {
 
     public void setFpgId(Long fpgId) {
         this.fpgId = fpgId;
+    }
+
+    public String getFpgNome() {
+        return fpgNome;
+    }
+
+    public void setFpgNome(String fpgNome) {
+        this.fpgNome = fpgNome;
     }
 
     public String getFpgDescricao() {
