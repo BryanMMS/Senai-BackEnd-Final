@@ -58,6 +58,8 @@ public class FornecedorService {
             fornecedor.setForCnpj(objDto.getForCnpj());
             fornecedor.setForRazaoSocial(objDto.getForRazaoSocial());
             fornecedor.setForNomeFantasia(objDto.getForNomeFantasia());
+            fornecedor.setForAtivo(objDto.getForAtivo());
+
 
             //Atualiza o endereço do Forne
             Endereco endereco = fornecedor.getEnderecos().get(0);
@@ -93,7 +95,7 @@ public class FornecedorService {
     }
 
     public Fornecedor fromDTO(FornecedorDTO objDto) {
-        Fornecedor fornecedor = new Fornecedor(null, objDto.getForNomeFantasia(), objDto.getForCnpj(), objDto.getForRazaoSocial());
+        Fornecedor fornecedor = new Fornecedor(null, objDto.getForNomeFantasia(), objDto.getForCnpj(), objDto.getForRazaoSocial(),objDto.getForAtivo());
 
         Endereco endereco = new Endereco(null, fornecedor, objDto.getEndRua(), objDto.getEndNumero(),
                 objDto.getEndCidade(), objDto.getEndCep(), objDto.getEndEstado());
@@ -115,6 +117,7 @@ public class FornecedorService {
         dto.setForCnpj(obj.getForCnpj());
         dto.setForNomeFantasia(obj.getForNomeFantasia());
         dto.setForRazaoSocial(obj.getForRazaoSocial());
+        dto.setForAtivo(obj.getForAtivo());
 
 // Atributos específicos de Endereco
         Endereco endereco = obj.getEnderecos().get(0);

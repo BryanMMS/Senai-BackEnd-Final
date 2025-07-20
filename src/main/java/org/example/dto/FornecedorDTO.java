@@ -14,7 +14,7 @@ public class FornecedorDTO {
     @CNPJ(message = "CNPJ inválido!")
     private String forCnpj;
     private String forRazaoSocial;
-
+private Boolean forAtivo;
 
     private String endRua;
     private String endNumero;
@@ -65,6 +65,14 @@ public FornecedorDTO(){
         this.forRazaoSocial = forRazaoSocial;
     }
 
+    public Boolean getForAtivo() {
+        return forAtivo;
+    }
+
+    public void setForAtivo(Boolean forAtivo) {
+        this.forAtivo = forAtivo;
+    }
+
     public String getEndRua() {
         return endRua;
     }
@@ -100,6 +108,7 @@ public FornecedorDTO(){
     public String getEndEstado() {
         return endEstado;
     }
+
 
     public void setEndEstado(String endEstado) {
         this.endEstado = endEstado;
